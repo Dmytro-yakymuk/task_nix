@@ -1,0 +1,5 @@
+github.com/Dmytro-yakymuk/parser v0.0.0-20210127133750-7132cb6dddd3 h1:JnwLfKwjhHUgYkcvDT3aWiE50KOS0+590TvhyiDxNlI=
+github.com/Dmytro-yakymuk/parser v0.0.0-20210127133750-7132cb6dddd3/go.mod h1:zN7X3LEyyQm+SKhXTLdu5S2KBqV0+1fCi+6Ybkj4nWo=
+github.com/go-sql-driver/mysql v1.5.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
+github.com/golang-migrate/migrate v3.5.4+incompatible/go.mod h1:IsVUlFN5puWOmXrqjgGUfIRIbU7mr8oNBE2tyERd9Wk=
+github.com/joho/godotenv v1.3.0/go.mod h1:7hK45KPybAkOC6peb+G5yklZfMxEjkZhHbwpqxOKXbg=
