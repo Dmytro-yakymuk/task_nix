@@ -1,0 +1,8 @@
+http:
+  port: 8000
+  readTimeout: 10s
+  writeTimeout: 10s
+  maxHeaderMegabytes: 1
+mysql:
+  port: 3306
+  name: parser_db
