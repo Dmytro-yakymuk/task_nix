@@ -8,6 +8,9 @@ import (
 type Posts interface {
 	GetAll() ([]models.Post, error)
 	Create(post *models.Post) error
+	GetOne(id int) (*models.Post, error)
+	Update(post *models.Post) error
+	Delete(id int) error
 }
 
 type Comments interface {

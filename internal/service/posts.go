@@ -20,3 +20,15 @@ func (s *PostsService) GetAll() ([]models.Post, error) {
 func (s *PostsService) Create(post *models.Post) error {
 	return s.repository.Create(post)
 }
+
+func (s *PostsService) GetOne(id int) (*models.Post, error) {
+	return s.repository.GetOne(id)
+}
+
+func (s *PostsService) Update(post *models.Post) error {
+	return s.repository.Update(post)
+}
+
+func (s *PostsService) Delete(id int) error {
+	return s.repository.Delete(id)
+}

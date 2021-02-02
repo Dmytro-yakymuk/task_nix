@@ -14,14 +14,32 @@ func NewPostsRepository(db *gorm.DB) *PostsRepository {
 }
 
 func (r *PostsRepository) GetAll() ([]models.Post, error) {
-	var lists []models.Post
-
-	result := r.db.Find(&lists)
-
-	return lists, result.Error
+	var posts []models.Post
+	result := r.db.Find(&posts)
+	return posts, result.Error
 }
 
 func (r *PostsRepository) Create(post *models.Post) error {
 	result := r.db.Create(post)
+	return result.Error
+}
+
+func (r *PostsRepository) GetOne(id int) (*models.Post, error) {
+	var post = new(models.Post)
+	result := r.db.First(&post, id)
+	return post, result.Error
+}
+
+func (r *PostsRepository) Update(post *models.Post) error {
+	result := r.db.Model(post).Updates(models.Post{UserId: post.UserId, Title: post.Title, Body: post.Body})
+	return result.Error
+}
+
+func (r *PostsRepository) Delete(id int) error {
+	post := r.db.First(&models.Post{}, id)
+	if post.Error != nil {
+		return post.Error
+	}
+	result := r.db.Delete(&models.Post{}, id)
 	return result.Error
 }
