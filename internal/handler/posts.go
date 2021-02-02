@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"encoding/xml"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -75,33 +76,34 @@ func (h *Handler) routePosts(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) getAll(w http.ResponseWriter, r *http.Request) {
 	var posts []models.Post
+	accept := fmt.Sprintf("%v", r.Header["Accept"])
+
+	w.Header().Set("Content-Type", accept)
 
 	posts, err := h.services.Posts.GetAll()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	keys, ok := r.URL.Query()["type"]
+	fmt.Printf(accept)
 
-	if ok && keys[0] == "xml" {
-		w.Header().Set("Content-Type", "application/xml")
-		xml, err := xml.MarshalIndent(posts, " ", "  ")
+	if accept == "[application/xml]" {
+		res, err := xml.MarshalIndent(posts, " ", "  ")
 		if err != nil {
 			log.Fatal(err.Error())
 		}
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(xml))
+		w.Write([]byte(res))
 
 	} else {
-
-		w.Header().Set("Content-Type", "application/json")
-		json, err := json.Marshal(posts)
+		res, err := json.Marshal(posts)
 		if err != nil {
 			log.Fatal(err.Error())
 		}
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(json))
+		w.Write([]byte(res))
 	}
+
 }
 
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {

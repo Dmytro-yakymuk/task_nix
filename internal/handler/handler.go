@@ -19,7 +19,6 @@ func NewHandler(services *service.Service) *Handler {
 }
 
 // Init ...
-// to present data in xml format, add to the address `?type=xml`
 func (h *Handler) Init() {
 
 	http.HandleFunc("/api/v1/posts", h.routePosts)  // GET, POST
