@@ -15,54 +15,54 @@ import (
 )
 
 var (
-	urlPosts   = "/api/v1/posts"
-	urlPostsId = regexp.MustCompile(`/api/v1/posts/+\d+$`)
+	urlComments   = "/api/v1/comments"
+	urlCommentsId = regexp.MustCompile(`/api/v1/comments/+\d+$`)
 )
 
-func (h *Handler) routePosts(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) routeComments(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case "GET":
-		if r.URL.Path == urlPosts {
-			h.getAllPosts(w, r)
-		} else if urlPostsId.MatchString(r.URL.Path) {
+		if r.URL.Path == urlComments {
+			h.getAllComments(w, r)
+		} else if urlCommentsId.MatchString(r.URL.Path) {
 			path := strings.Split(r.URL.Path, "/")
 			id, err := strconv.Atoi(path[4])
 			if err != nil {
 				w.WriteHeader(http.StatusNotFound)
 			} else {
-				h.getOnePost(w, r, id)
+				h.getOneComment(w, r, id)
 			}
 
 		} else {
 			w.WriteHeader(http.StatusNotFound)
 		}
 	case "POST":
-		if r.URL.Path == urlPosts {
-			h.createPost(w, r)
+		if r.URL.Path == urlComments {
+			h.createComment(w, r)
 		} else {
 			w.WriteHeader(http.StatusNotFound)
 		}
 	case "PUT":
-		if urlPostsId.MatchString(r.URL.Path) {
+		if urlCommentsId.MatchString(r.URL.Path) {
 			path := strings.Split(r.URL.Path, "/")
 			id, err := strconv.Atoi(path[4])
 			if err != nil {
 				w.WriteHeader(http.StatusNotFound)
 			} else {
-				h.updatePost(w, r, id)
+				h.updateComment(w, r, id)
 			}
 		} else {
 			w.WriteHeader(http.StatusNotFound)
 		}
 	case "DELETE":
-		if urlPostsId.MatchString(r.URL.Path) {
+		if urlCommentsId.MatchString(r.URL.Path) {
 			path := strings.Split(r.URL.Path, "/")
 			id, err := strconv.Atoi(path[4])
 			if err != nil {
 				w.WriteHeader(http.StatusNotFound)
 			} else {
-				h.deletePost(w, r, id)
+				h.deleteComment(w, r, id)
 			}
 		} else {
 			w.WriteHeader(http.StatusNotFound)
@@ -73,13 +73,13 @@ func (h *Handler) routePosts(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (h *Handler) getAllPosts(w http.ResponseWriter, r *http.Request) {
-	var posts []models.Post
+func (h *Handler) getAllComments(w http.ResponseWriter, r *http.Request) {
+	var comments []models.Comment
 	accept := fmt.Sprintf("%v", r.Header["Accept"])
 
 	w.Header().Set("Content-Type", accept)
 
-	posts, err := h.services.Posts.GetAll()
+	comments, err := h.services.Comments.GetAll()
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	} else {
@@ -87,7 +87,7 @@ func (h *Handler) getAllPosts(w http.ResponseWriter, r *http.Request) {
 		switch accept {
 		case "[application/xml]":
 
-			res, err := xml.Marshal(posts)
+			res, err := xml.Marshal(comments)
 			if err != nil {
 				log.Fatal(err.Error())
 			}
@@ -95,7 +95,7 @@ func (h *Handler) getAllPosts(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte(res))
 
 		case "[application/json]":
-			res, err := json.Marshal(posts)
+			res, err := json.Marshal(comments)
 			if err != nil {
 				log.Fatal(err.Error())
 			}
@@ -107,19 +107,19 @@ func (h *Handler) getAllPosts(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *Handler) createPost(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) createComment(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
 
-	var post models.Post
-	err = json.Unmarshal(body, &post)
+	var comment models.Comment
+	err = json.Unmarshal(body, &comment)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
 
-	err = h.services.Posts.Create(&post)
+	err = h.services.Comments.Create(&comment)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
@@ -127,8 +127,8 @@ func (h *Handler) createPost(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
-func (h *Handler) getOnePost(w http.ResponseWriter, r *http.Request, id int) {
-	post, err := h.services.Posts.GetOne(id)
+func (h *Handler) getOneComment(w http.ResponseWriter, r *http.Request, id int) {
+	comment, err := h.services.Comments.GetOne(id)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	} else {
@@ -139,7 +139,7 @@ func (h *Handler) getOnePost(w http.ResponseWriter, r *http.Request, id int) {
 		switch accept {
 		case "[application/xml]":
 
-			res, err := xml.Marshal(post)
+			res, err := xml.Marshal(comment)
 			if err != nil {
 				log.Fatal(err.Error())
 			}
@@ -147,7 +147,7 @@ func (h *Handler) getOnePost(w http.ResponseWriter, r *http.Request, id int) {
 			w.Write([]byte(res))
 
 		case "[application/json]":
-			res, err := json.Marshal(post)
+			res, err := json.Marshal(comment)
 			if err != nil {
 				log.Fatal(err.Error())
 			}
@@ -159,20 +159,20 @@ func (h *Handler) getOnePost(w http.ResponseWriter, r *http.Request, id int) {
 	}
 }
 
-func (h *Handler) updatePost(w http.ResponseWriter, r *http.Request, id int) {
+func (h *Handler) updateComment(w http.ResponseWriter, r *http.Request, id int) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
 
-	var post models.Post
-	err = json.Unmarshal(body, &post)
+	var comment models.Comment
+	err = json.Unmarshal(body, &comment)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
-	post.Id = id
+	comment.Id = id
 
-	err = h.services.Posts.Update(&post)
+	err = h.services.Comments.Update(&comment)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
@@ -180,9 +180,9 @@ func (h *Handler) updatePost(w http.ResponseWriter, r *http.Request, id int) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
-func (h *Handler) deletePost(w http.ResponseWriter, r *http.Request, id int) {
+func (h *Handler) deleteComment(w http.ResponseWriter, r *http.Request, id int) {
 
-	err := h.services.Posts.Delete(id)
+	err := h.services.Comments.Delete(id)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}

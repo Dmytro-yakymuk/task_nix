@@ -24,4 +24,7 @@ func (h *Handler) Init() {
 	http.HandleFunc("/api/v1/posts", h.routePosts)  // GET, POST
 	http.HandleFunc("/api/v1/posts/", h.routePosts) // GET, PUT, DELETE
 
+	http.HandleFunc("/api/v1/comments", h.routeComments)  // GET, POST
+	http.HandleFunc("/api/v1/comments/", h.routeComments) // GET, PUT, DELETE
+
 }

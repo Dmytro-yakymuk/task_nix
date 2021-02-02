@@ -14,6 +14,11 @@ type Posts interface {
 }
 
 type Comments interface {
+	GetAll() ([]models.Comment, error)
+	Create(comment *models.Comment) error
+	GetOne(id int) (*models.Comment, error)
+	Update(comment *models.Comment) error
+	Delete(id int) error
 }
 
 type Service struct {

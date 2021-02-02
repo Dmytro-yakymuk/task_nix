@@ -31,6 +31,11 @@ func (r *PostsRepository) GetOne(id int) (*models.Post, error) {
 }
 
 func (r *PostsRepository) Update(post *models.Post) error {
+	check_post := r.db.First(&models.Post{}, post.Id)
+	if check_post.Error != nil {
+		return check_post.Error
+	}
+
 	result := r.db.Model(post).Updates(models.Post{UserId: post.UserId, Title: post.Title, Body: post.Body})
 	return result.Error
 }
