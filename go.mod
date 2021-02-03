@@ -6,6 +6,8 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/joho/godotenv v1.3.0
+	github.com/labstack/echo v3.3.10+incompatible
+	github.com/labstack/echo/v4 v4.1.17
 	github.com/magiconair/properties v1.8.4 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
 	github.com/pelletier/go-toml v1.8.1 // indirect
