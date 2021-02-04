@@ -1,0 +1,302 @@
+basePath: /api/v1
+definitions:
+  models.Comment:
+    properties:
+      body:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      postId:
+        type: integer
+    type: object
+  models.Post:
+    properties:
+      body:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      userId:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is REST API with echo framework.
+  title: Task NIX
+  version: "2.0"
+paths:
+  /comments:
+    get:
+      consumes:
+      - application/json
+      - text/xml
+      description: get all comments
+      operationId: getAllComments
+      produces:
+      - application/json
+      - text/xml
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Comment'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            type: int
+      summary: List comments
+      tags:
+      - comments
+    post:
+      consumes:
+      - application/json
+      description: create comment
+      operationId: createComment
+      parameters:
+      - description: info for comment
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.Comment'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: int
+        "404":
+          description: Not Found
+          schema:
+            type: int
+      summary: Add a comment
+      tags:
+      - comments
+  /comments/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete comment
+      operationId: deletecomment
+      parameters:
+      - description: id for comment
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: int
+        "404":
+          description: Not Found
+          schema:
+            type: int
+      summary: Delete a comment
+      tags:
+      - comments
+    get:
+      consumes:
+      - application/json
+      - text/xml
+      description: show comment for input id
+      operationId: getOneComment
+      parameters:
+      - description: id for comment
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      - text/xml
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Comment'
+        "404":
+          description: Not Found
+          schema:
+            type: int
+      summary: Show a comment
+      tags:
+      - comments
+    put:
+      consumes:
+      - application/json
+      description: update comment
+      operationId: updateComment
+      parameters:
+      - description: id for comment
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: info for comment
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.Comment'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: int
+        "404":
+          description: Not Found
+          schema:
+            type: int
+      summary: Update a comment
+      tags:
+      - comments
+  /posts:
+    get:
+      consumes:
+      - application/json
+      - text/xml
+      description: get all posts
+      operationId: getAllPosts
+      produces:
+      - application/json
+      - text/xml
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Post'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            type: int
+      summary: List posts
+      tags:
+      - posts
+    post:
+      consumes:
+      - application/json
+      description: create post
+      operationId: createPost
+      parameters:
+      - description: info for post
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.Post'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: int
+        "404":
+          description: Not Found
+          schema:
+            type: int
+      summary: Add a post
+      tags:
+      - posts
+  /posts/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete post
+      operationId: deletePost
+      parameters:
+      - description: id for post
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: int
+        "404":
+          description: Not Found
+          schema:
+            type: int
+      summary: Delete a post
+      tags:
+      - posts
+    get:
+      consumes:
+      - application/json
+      - text/xml
+      description: show post for input id
+      operationId: getOnePost
+      parameters:
+      - description: id for post
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      - text/xml
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Post'
+        "404":
+          description: Not Found
+          schema:
+            type: int
+      summary: Show a post
+      tags:
+      - posts
+    put:
+      consumes:
+      - application/json
+      description: update post
+      operationId: updatePost
+      parameters:
+      - description: id for post
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: info for post
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.Post'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: int
+        "404":
+          description: Not Found
+          schema:
+            type: int
+      summary: Update a post
+      tags:
+      - posts
+swagger: "2.0"

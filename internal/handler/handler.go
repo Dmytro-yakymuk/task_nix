@@ -3,6 +3,9 @@ package handler
 import (
 	"github.com/Dmytro-yakymuk/task_nix/internal/service"
 	"github.com/labstack/echo/v4"
+
+	_ "github.com/Dmytro-yakymuk/task_nix/docs"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 // Handler ...
@@ -17,7 +20,6 @@ func NewHandler(services *service.Service) *Handler {
 	}
 }
 
-// Init ...
 func (h *Handler) Init(e *echo.Echo) {
 
 	g := e.Group("/api/v1")
@@ -34,4 +36,5 @@ func (h *Handler) Init(e *echo.Echo) {
 	g.PUT("/comments/:id", h.updateComment)
 	g.DELETE("/comments/:id", h.deleteComment)
 
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 }

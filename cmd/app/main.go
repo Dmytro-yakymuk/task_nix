@@ -1,6 +1,9 @@
 package main
 
-import "github.com/Dmytro-yakymuk/task_nix/internal/app"
+import (
+	_ "github.com/Dmytro-yakymuk/task_nix/docs"
+	"github.com/Dmytro-yakymuk/task_nix/internal/app"
+)
 
 const configPath = "configs/main"
 

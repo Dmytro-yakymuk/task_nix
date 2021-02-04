@@ -11,6 +11,18 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// getAllPosts godoc
+// @Summary List posts
+// @Tags posts
+// @Description get all posts
+// @ID getAllPosts
+// @Accept json
+// @Accept xml
+// @Produce json
+// @Produce xml
+// @Success 200 {array} models.Post
+// @Failure 404 {int} echo.Context.Response().Status
+// @Router /posts [get]
 func (h *Handler) getAllPosts(c echo.Context) error {
 	var posts []models.Post
 	accept := fmt.Sprintf("%v", c.Request().Header["Accept"])
@@ -32,6 +44,17 @@ func (h *Handler) getAllPosts(c echo.Context) error {
 
 }
 
+// createPost godoc
+// @Tags posts
+// @Summary Add a post
+// @Description create post
+// @ID createPost
+// @Accept json
+// @Produce json
+// @Param input body models.Post true "info for post"
+// @Success 201 {int} echo.Context.Response().Status
+// @Failure 404 {int} echo.Context.Response().Status
+// @Router /posts [post]
 func (h *Handler) createPost(c echo.Context) error {
 	body, err := ioutil.ReadAll(c.Request().Body)
 	if err != nil {
@@ -52,6 +75,19 @@ func (h *Handler) createPost(c echo.Context) error {
 	return c.NoContent(http.StatusCreated)
 }
 
+// getOnePost godoc
+// @Summary Show a post
+// @Tags posts
+// @Description show post for input id
+// @ID getOnePost
+// @Accept json
+// @Accept xml
+// @Produce json
+// @Produce xml
+// @Param id path string true "id for post"
+// @Success 200 {object} models.Post
+// @Failure 404 {int} echo.Context.Response().Status
+// @Router /posts/{id} [get]
 func (h *Handler) getOnePost(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -76,6 +112,18 @@ func (h *Handler) getOnePost(c echo.Context) error {
 	}
 }
 
+// updatePost godoc
+// @Tags posts
+// @Summary Update a post
+// @Description update post
+// @ID updatePost
+// @Accept json
+// @Produce json
+// @Param id path string true "id for post"
+// @Param input body models.Post true "info for post"
+// @Success 204 {int} echo.Context.Response().Status
+// @Failure 404 {int} echo.Context.Response().Status
+// @Router /posts/{id} [put]
 func (h *Handler) updatePost(c echo.Context) error {
 	body, err := ioutil.ReadAll(c.Request().Body)
 	if err != nil {
@@ -102,6 +150,17 @@ func (h *Handler) updatePost(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
+// deletePost godoc
+// @Tags posts
+// @Summary Delete a post
+// @Description delete post
+// @ID deletePost
+// @Accept json
+// @Produce json
+// @Param id path string true "id for post"
+// @Success 204 {int} echo.Context.Response().Status
+// @Failure 404 {int} echo.Context.Response().Status
+// @Router /posts/{id} [delete]
 func (h *Handler) deletePost(c echo.Context) error {
 
 	id, err := strconv.Atoi(c.Param("id"))
