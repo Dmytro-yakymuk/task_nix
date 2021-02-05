@@ -34,7 +34,7 @@ func (h *Handler) getAllComments(c echo.Context) error {
 	c.Response().Header().Set("Content-Type", accept)
 
 	switch accept {
-	case "[application/xml]":
+	case "[text/xml]":
 		return c.XML(http.StatusOK, comments)
 	case "[application/json]":
 		return c.JSON(http.StatusOK, comments)
@@ -102,7 +102,7 @@ func (h *Handler) getOneComment(c echo.Context) error {
 	c.Response().Header().Set("Content-Type", accept)
 
 	switch accept {
-	case "[application/xml]":
+	case "[text/xml]":
 		return c.XML(http.StatusOK, comment)
 	case "[application/json]":
 		return c.JSON(http.StatusOK, comment)

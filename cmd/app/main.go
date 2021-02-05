@@ -7,6 +7,12 @@ import (
 
 const configPath = "configs/main"
 
+// @title Task NIX
+// @version 2.0
+// @description This is REST API with echo framework.
+
+// @host localhost:8080
+// @BasePath /api/v1
 func main() {
 	app.Run(configPath)
 }

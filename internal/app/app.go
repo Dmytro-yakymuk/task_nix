@@ -11,12 +11,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// @title Task NIX
-// @version 2.0
-// @description This is REST API with echo framework.
-
-// @host localhost:8080
-// @BasePath /api/v1
 func Run(configPath string) {
 	cfg, err := config.Init(configPath)
 	if err != nil {

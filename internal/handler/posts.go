@@ -34,7 +34,7 @@ func (h *Handler) getAllPosts(c echo.Context) error {
 	}
 
 	switch accept {
-	case "[application/xml]":
+	case "[text/xml]":
 		return c.XML(http.StatusOK, posts)
 	case "[application/json]":
 		return c.JSON(http.StatusOK, posts)
@@ -103,7 +103,7 @@ func (h *Handler) getOnePost(c echo.Context) error {
 	c.Response().Header().Set("Content-Type", accept)
 
 	switch accept {
-	case "[application/xml]":
+	case "[text/xml]":
 		return c.XML(http.StatusOK, post)
 	case "[application/json]":
 		return c.JSON(http.StatusOK, post)
