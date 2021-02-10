@@ -2,6 +2,7 @@ package handler
 
 import (
 	"github.com/Dmytro-yakymuk/task_nix/internal/service"
+
 	"github.com/labstack/echo/v4"
 
 	_ "github.com/Dmytro-yakymuk/task_nix/docs"
@@ -22,19 +23,29 @@ func NewHandler(services *service.Service) *Handler {
 
 func (h *Handler) Init(e *echo.Echo) {
 
+	e.GET("/auth", h.auth)
+	e.GET("/auth/callback", h.authCallback)
+	e.GET("/logout", h.logout)
+
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
+
 	g := e.Group("/api/v1")
 
 	g.GET("/posts", h.getAllPosts)
-	g.POST("/posts", h.createPost)
 	g.GET("/posts/:id", h.getOnePost)
-	g.PUT("/posts/:id", h.updatePost)
-	g.DELETE("/posts/:id", h.deletePost)
 
 	g.GET("/comments", h.getAllComments)
-	g.POST("/comments", h.createComment)
 	g.GET("/comments/:id", h.getOneComment)
-	g.PUT("/comments/:id", h.updateComment)
-	g.DELETE("/comments/:id", h.deleteComment)
 
-	e.GET("/swagger/*", echoSwagger.WrapHandler)
+	au := g.Group("")
+	au.Use(h.userIdentity)
+
+	au.POST("/posts", h.createPost)
+	au.PUT("/posts/:id", h.updatePost)
+	au.DELETE("/posts/:id", h.deletePost)
+
+	au.POST("/comments", h.createComment)
+	au.PUT("/comments/:id", h.updateComment)
+	au.DELETE("/comments/:id", h.deleteComment)
+
 }

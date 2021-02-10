@@ -24,7 +24,7 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/comments": {
+        "/api/v1/comments": {
             "get": {
                 "description": "get all comments",
                 "consumes": [
@@ -98,7 +98,7 @@ var doc = `{
                 }
             }
         },
-        "/comments/{id}": {
+        "/api/v1/comments/{id}": {
             "get": {
                 "description": "show comment for input id",
                 "consumes": [
@@ -222,7 +222,7 @@ var doc = `{
                 }
             }
         },
-        "/posts": {
+        "/api/v1/posts": {
             "get": {
                 "description": "get all posts",
                 "consumes": [
@@ -296,7 +296,7 @@ var doc = `{
                 }
             }
         },
-        "/posts/{id}": {
+        "/api/v1/posts/{id}": {
             "get": {
                 "description": "show post for input id",
                 "consumes": [
@@ -419,6 +419,96 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/auth": {
+            "get": {
+                "description": "auth user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "auth user",
+                "operationId": "auth",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/callback": {
+            "get": {
+                "description": "auth and create user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "auth callback user",
+                "operationId": "authCallback",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "get": {
+                "description": "logout and delete user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "logout user",
+                "operationId": "logout",
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -439,6 +529,9 @@ var doc = `{
                 },
                 "postId": {
                     "type": "integer"
+                },
+                "userId": {
+                    "type": "string"
                 }
             }
         },
@@ -455,7 +548,7 @@ var doc = `{
                     "type": "string"
                 },
                 "userId": {
-                    "type": "integer"
+                    "type": "string"
                 }
             }
         }
@@ -475,7 +568,7 @@ type swaggerInfo struct {
 var SwaggerInfo = swaggerInfo{
 	Version:     "2.0",
 	Host:        "localhost:8080",
-	BasePath:    "/api/v1",
+	BasePath:    "/",
 	Schemes:     []string{},
 	Title:       "Task NIX",
 	Description: "This is REST API with echo framework.",

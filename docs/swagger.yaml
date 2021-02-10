@@ -1,4 +1,4 @@
-basePath: /api/v1
+basePath: /
 definitions:
   models.Comment:
     properties:
@@ -12,6 +12,8 @@ definitions:
         type: string
       postId:
         type: integer
+      userId:
+        type: string
     type: object
   models.Post:
     properties:
@@ -22,7 +24,7 @@ definitions:
       title:
         type: string
       userId:
-        type: integer
+        type: string
     type: object
 host: localhost:8080
 info:
@@ -31,7 +33,7 @@ info:
   title: Task NIX
   version: "2.0"
 paths:
-  /comments:
+  /api/v1/comments:
     get:
       consumes:
       - application/json
@@ -81,7 +83,7 @@ paths:
       summary: Add a comment
       tags:
       - comments
-  /comments/{id}:
+  /api/v1/comments/{id}:
     delete:
       consumes:
       - application/json
@@ -165,7 +167,7 @@ paths:
       summary: Update a comment
       tags:
       - comments
-  /posts:
+  /api/v1/posts:
     get:
       consumes:
       - application/json
@@ -215,7 +217,7 @@ paths:
       summary: Add a post
       tags:
       - posts
-  /posts/{id}:
+  /api/v1/posts/{id}:
     delete:
       consumes:
       - application/json
@@ -299,4 +301,64 @@ paths:
       summary: Update a post
       tags:
       - posts
+  /auth:
+    get:
+      consumes:
+      - application/json
+      description: auth user
+      operationId: auth
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: int
+      summary: auth user
+      tags:
+      - auth
+  /auth/callback:
+    get:
+      consumes:
+      - application/json
+      description: auth and create user
+      operationId: authCallback
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: int
+        "201":
+          description: Created
+          schema:
+            type: int
+        "404":
+          description: Not Found
+          schema:
+            type: int
+      summary: auth callback user
+      tags:
+      - auth
+  /logout:
+    get:
+      consumes:
+      - application/json
+      description: logout and delete user
+      operationId: logout
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: int
+        "404":
+          description: Not Found
+          schema:
+            type: int
+      summary: logout user
+      tags:
+      - auth
 swagger: "2.0"

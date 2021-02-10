@@ -22,14 +22,21 @@ type Comments interface {
 	Delete(id int) error
 }
 
+type Users interface {
+	Create(user *models.User) error
+	GetOne(id string) (*models.User, error)
+	Delete(id string) error
+}
 type Repository struct {
 	Posts    Posts
 	Comments Comments
+	Users    Users
 }
 
 func NewRepository(db *gorm.DB) *Repository {
 	return &Repository{
 		Posts:    mdb.NewPostsRepository(db),
 		Comments: mdb.NewCommentsRepository(db),
+		Users:    mdb.NewUsersRepository(db),
 	}
 }

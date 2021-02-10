@@ -12,7 +12,7 @@ const configPath = "configs/main"
 // @description This is REST API with echo framework.
 
 // @host localhost:8080
-// @BasePath /api/v1
+// @BasePath /
 func main() {
 	app.Run(configPath)
 }

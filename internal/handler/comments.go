@@ -22,7 +22,7 @@ import (
 // @Produce xml
 // @Success 200 {array} models.Comment
 // @Failure 404 {int} echo.Context.Response().Status
-// @Router /comments [get]
+// @Router /api/v1/comments [get]
 func (h *Handler) getAllComments(c echo.Context) error {
 	var comments []models.Comment
 
@@ -53,7 +53,7 @@ func (h *Handler) getAllComments(c echo.Context) error {
 // @Param input body models.Comment true "info for comment"
 // @Success 201 {int} echo.Context.Response().Status
 // @Failure 404 {int} echo.Context.Response().Status
-// @Router /comments [post]
+// @Router /api/v1/comments [post]
 func (h *Handler) createComment(c echo.Context) error {
 	body, err := ioutil.ReadAll(c.Request().Body)
 	if err != nil {
@@ -86,7 +86,7 @@ func (h *Handler) createComment(c echo.Context) error {
 // @Param id path string true "id for comment"
 // @Success 200 {object} models.Comment
 // @Failure 404 {int} echo.Context.Response().Status
-// @Router /comments/{id} [get]
+// @Router /api/v1/comments/{id} [get]
 func (h *Handler) getOneComment(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -122,7 +122,7 @@ func (h *Handler) getOneComment(c echo.Context) error {
 // @Param input body models.Comment true "info for comment"
 // @Success 204 {int} echo.Context.Response().Status
 // @Failure 404 {int} echo.Context.Response().Status
-// @Router /comments/{id} [put]
+// @Router /api/v1/comments/{id} [put]
 func (h *Handler) updateComment(c echo.Context) error {
 	body, err := ioutil.ReadAll(c.Request().Body)
 	if err != nil {
@@ -159,7 +159,7 @@ func (h *Handler) updateComment(c echo.Context) error {
 // @Param id path string true "id for comment"
 // @Success 204 {int} echo.Context.Response().Status
 // @Failure 404 {int} echo.Context.Response().Status
-// @Router /comments/{id} [delete]
+// @Router /api/v1/comments/{id} [delete]
 func (h *Handler) deleteComment(c echo.Context) error {
 
 	id, err := strconv.Atoi(c.Param("id"))

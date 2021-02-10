@@ -22,7 +22,7 @@ import (
 // @Produce xml
 // @Success 200 {array} models.Post
 // @Failure 404 {int} echo.Context.Response().Status
-// @Router /posts [get]
+// @Router /api/v1/posts [get]
 func (h *Handler) getAllPosts(c echo.Context) error {
 	var posts []models.Post
 	accept := fmt.Sprintf("%v", c.Request().Header["Accept"])
@@ -54,7 +54,7 @@ func (h *Handler) getAllPosts(c echo.Context) error {
 // @Param input body models.Post true "info for post"
 // @Success 201 {int} echo.Context.Response().Status
 // @Failure 404 {int} echo.Context.Response().Status
-// @Router /posts [post]
+// @Router /api/v1/posts [post]
 func (h *Handler) createPost(c echo.Context) error {
 	body, err := ioutil.ReadAll(c.Request().Body)
 	if err != nil {
@@ -63,6 +63,16 @@ func (h *Handler) createPost(c echo.Context) error {
 
 	var post models.Post
 	err = json.Unmarshal(body, &post)
+	if err != nil {
+		return c.NoContent(http.StatusNotFound)
+	}
+
+	// userID, err := gothic.GetFromSession("userID", c.Request())
+	// if err != nil {
+	// 	return c.NoContent(http.StatusNotFound)
+	// }
+
+	// post.UserId = userID
 	if err != nil {
 		return c.NoContent(http.StatusNotFound)
 	}
@@ -87,7 +97,7 @@ func (h *Handler) createPost(c echo.Context) error {
 // @Param id path string true "id for post"
 // @Success 200 {object} models.Post
 // @Failure 404 {int} echo.Context.Response().Status
-// @Router /posts/{id} [get]
+// @Router /api/v1/posts/{id} [get]
 func (h *Handler) getOnePost(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -123,7 +133,7 @@ func (h *Handler) getOnePost(c echo.Context) error {
 // @Param input body models.Post true "info for post"
 // @Success 204 {int} echo.Context.Response().Status
 // @Failure 404 {int} echo.Context.Response().Status
-// @Router /posts/{id} [put]
+// @Router /api/v1/posts/{id} [put]
 func (h *Handler) updatePost(c echo.Context) error {
 	body, err := ioutil.ReadAll(c.Request().Body)
 	if err != nil {
@@ -160,7 +170,7 @@ func (h *Handler) updatePost(c echo.Context) error {
 // @Param id path string true "id for post"
 // @Success 204 {int} echo.Context.Response().Status
 // @Failure 404 {int} echo.Context.Response().Status
-// @Router /posts/{id} [delete]
+// @Router /api/v1/posts/{id} [delete]
 func (h *Handler) deletePost(c echo.Context) error {
 
 	id, err := strconv.Atoi(c.Param("id"))
